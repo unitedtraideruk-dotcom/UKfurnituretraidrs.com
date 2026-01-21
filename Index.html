@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>United Traders Furniture</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white">
+
+<!-- HEADER -->
+<header class="bg-black p-4 flex justify-between items-center">
+  <h1 class="text-2xl font-bold text-yellow-400">United Traders</h1>
+  <a href="https://wa.me/447000000000" target="_blank"
+     class="bg-green-500 px-4 py-2 rounded">WhatsApp</a>
+</header>
+
+<!-- SEARCH -->
+<div class="p-4">
+  <input id="search" oninput="render()"
+    class="w-full p-3 bg-black border border-gray-700"
+    placeholder="Search products">
+</div>
+
+<!-- CATEGORY -->
+<div class="p-4 flex gap-2">
+  <select id="cat" onchange="render()" class="p-2 bg-black border">
+    <option value="">All Categories</option>
+    <option>Sofa</option>
+    <option>Bed</option>
+  </select>
+
+  <select id="sub" onchange="render()" class="p-2 bg-black border">
+    <option value="">All Sub</option>
+    <option>Modern</option>
+    <option>Classic</option>
+  </select>
+</div>
+
+<!-- PRODUCTS -->
+<div id="products" class="grid md:grid-cols-3 gap-6 p-6"></div>
+
+<script>
+const products = [
+  {name:"Luxury Sofa", cat:"Sofa", sub:"Modern", price:"£1200",
+   img:"https://images.unsplash.com/photo-1586023492125-27b2c045efd7"},
+  {name:"Wooden Bed", cat:"Bed", sub:"Classic", price:"£1500",
+   img:"https://images.unsplash.com/photo-1505691938895-1758d7feb511"}
+];
+
+function render(){
+  const q = search.value.toLowerCase();
+  const c = cat.value;
+  const s = sub.value;
+  productsDiv.innerHTML = "";
+  products.filter(p =>
+    (!q || p.name.toLowerCase().includes(q)) &&
+    (!c || p.cat===c) &&
+    (!s || p.sub===s)
+  ).forEach(p=>{
+    productsDiv.innerHTML += `
+      <div class="border border-gray-700 rounded">
+        <img src="${p.img}" class="h-48 w-full object-cover">
+        <div class="p-4">
+          <h3 class="font-bold">${p.name}</h3>
+          <p class="text-yellow-400">${p.price}</p>
+          <a target="_blank"
+             href="https://wa.me/447000000000?text=I want ${p.name}"
+             class="block mt-2 bg-yellow-400 text-black text-center py-2 rounded">
+             Order on WhatsApp
+          </a>
+        </div>
+      </div>`;
+  });
+}
+const productsDiv = document.getElementById("products");
+render();
+</script>
+
+</body>
+</html>
